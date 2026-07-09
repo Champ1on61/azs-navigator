@@ -6,7 +6,6 @@
     <title>АЗС Навигатор</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <script src="https://api-maps.yandex.ru/2.1/?apikey=510626a8-828f-4d0e-bb75-59a983426779&lang=ru_RU" type="text/javascript"></script>
     
     <style>
@@ -18,96 +17,49 @@
         .search-container { flex: 1; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 16px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
         .search-icon { font-size: 20px; color: #666; }
         .search-input { flex: 1; border: none; outline: none; font-size: 15px; font-family: inherit; background: transparent; color: #222; }
-        .search-input::placeholder { color: #999; }
         .menu-btn { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.15); cursor: pointer; font-size: 20px; }
         
         .right-controls { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
-        .control-btn { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 14px; border: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; font-size: 20px; transition: all 0.2s ease; }
-        .control-btn:hover { transform: scale(1.08); }
-        .control-btn.location { background: #FFD60A; }
-        .control-btn.location.active { background: #FFC107; animation: pulse 2s infinite; }
+        .control-btn { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 14px; border: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; font-size: 20px; }
         .control-btn.support { background: linear-gradient(135deg, #FF6B6B, #FF8E53); color: white; animation: softPulse 3s infinite; }
+        .control-btn.location { background: #FFD60A; }
         
         @keyframes softPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 4px 16px rgba(255, 107, 107, 0.4); }
             50% { transform: scale(1.08); box-shadow: 0 4px 24px rgba(255, 107, 107, 0.8); }
         }
         
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 16px rgba(255, 214, 10, 0.4); }
-            50% { box-shadow: 0 4px 24px rgba(255, 214, 10, 0.8); }
-        }
-        
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 24px 24px 0 0; box-shadow: 0 -4px 30px rgba(0,0,0,0.15); z-index: 1000; max-height: 70vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .bottom-sheet.active { transform: translateY(0); }
-        .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto; }
-        .sheet-content { padding: 0 20px 30px; }
-        .sheet-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-        .sheet-title { font-size: 22px; font-weight: 700; color: #1a1a1a; flex: 1; }
-        .sheet-close { width: 32px; height: 32px; background: #f0f0f0; border-radius: 50%; border: none; cursor: pointer; font-size: 18px; }
-        
-        .fuel-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .fuel-chip { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #f5f5f5; border-radius: 12px; font-size: 14px; font-weight: 600; }
-        .fuel-indicator { width: 10px; height: 10px; border-radius: 50%; }
-        .fuel-indicator.green { background: #34C759; box-shadow: 0 0 8px rgba(52, 199, 89, 0.5); }
-        .fuel-indicator.yellow { background: #FFD60A; box-shadow: 0 0 8px rgba(255, 214, 10, 0.5); }
-        .fuel-indicator.red { background: #FF3B30; box-shadow: 0 0 8px rgba(255, 59, 48, 0.5); }
-        
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .service-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; background: #f8f8f8; border-radius: 12px; font-size: 12px; color: #555; }
-        .service-icon { font-size: 24px; }
-        
-        .action-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .action-btn { flex: 1; padding: 14px; border: none; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .action-btn.primary { background: #FFD60A; color: #1a1a1a; }
-        .action-btn.secondary { background: #f0f0f0; color: #333; }
-        
-        .chat-section { border-top: 1px solid #eee; padding-top: 16px; }
-        .chat-header { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
-        .chat-messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .chat-message { background: #f5f5f5; padding: 10px 12px; border-radius: 12px; font-size: 13px; }
-        .chat-meta { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px; }
-        .chat-author { font-weight: 600; color: #007AFF; }
-        .chat-time { color: #999; }
-        .chat-input-container { display: flex; gap: 8px; }
-        .chat-name-input { width: 100px; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 13px; outline: none; }
-        .chat-text-input { flex: 1; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 13px; outline: none; resize: none; }
-        .chat-send-btn { width: 44px; height: 44px; background: #FFD60A; border: none; border-radius: 12px; cursor: pointer; font-size: 18px; }
-        
-        .fab-container { position: fixed; bottom: 24px; left: 16px; z-index: 1000; display: flex; flex-direction: column; gap: 12px; }
-        .fab { width: 56px; height: 56px; border-radius: 16px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
-        .fab.event { background: #FF9500; color: white; }
-        
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-overlay.active { display: flex; }
-        .modal { background: white; border-radius: 20px; padding: 24px; max-width: 400px; width: 100%; }
-        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
-        .modal input, .modal select, .modal textarea { width: 100%; padding: 12px 14px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 14px; margin-bottom: 12px; outline: none; }
-        .modal-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 8px; text-decoration: none; text-align: center; display: inline-block; }
-        .modal-btn.primary { background: #FFD60A; color: #1a1a1a; }
-        .modal-btn.secondary { background: #f0f0f0; color: #333; }
-        
-        .search-results { position: fixed; top: 80px; left: 16px; right: 16px; background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); z-index: 1001; max-height: 50vh; overflow-y: auto; display: none; }
-        .search-results.active { display: block; }
-        .search-result-item { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
-        .search-result-item:hover { background: #f8f8f8; }
-        .search-result-name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
-        .search-result-address { font-size: 12px; color: #999; }
-        
         @keyframes pulseRed {
             0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
             50% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
         }
         
-        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; transform: translateX(-50%) translateY(0); } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 24px 24px 0 0; box-shadow: 0 -4px 30px rgba(0,0,0,0.15); z-index: 1000; max-height: 70vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.4s; }
+        .bottom-sheet.active { transform: translateY(0); }
+        .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto; }
+        .sheet-content { padding: 0 20px 30px; }
         
-        @media (max-width: 600px) {
-            .top-panel { top: 10px; left: 10px; right: 10px; }
-            .right-controls { right: 10px; }
-            .fab-container { bottom: 16px; left: 10px; }
-            .services-grid { grid-template-columns: repeat(3, 1fr); }
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(4px); 
+            z-index: 2000; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
         }
+        .modal-overlay.active { display: flex !important; }
+        .modal { background: white; border-radius: 20px; padding: 24px; max-width: 400px; width: 100%; }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+        .modal-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 8px; text-decoration: none; text-align: center; display: inline-block; }
+        .modal-btn.primary { background: #FFD60A; color: #1a1a1a; }
+        .modal-btn.secondary { background: #f0f0f0; color: #333; }
+        
+        .fab-container { position: fixed; bottom: 24px; left: 16px; z-index: 1000; }
+        .fab { width: 56px; height: 56px; border-radius: 16px; border: none; cursor: pointer; font-size: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .fab.event { background: #FF9500; color: white; }
     </style>
 </head>
 <body>
@@ -116,18 +68,14 @@
     <div class="top-panel">
         <div class="search-container">
             <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="searchInput" placeholder="Поиск АЗС, адреса..." oninput="searchStations()">
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск АЗС...">
         </div>
         <button class="menu-btn" onclick="toggleFilters()">⚙️</button>
     </div>
     
-    <div class="search-results" id="searchResults"></div>
-    
     <div class="right-controls">
         <button class="control-btn support" onclick="openSupportModal()">❤️</button>
-        <button class="control-btn" onclick="zoomIn()">➕</button>
-        <button class="control-btn" onclick="zoomOut()">➖</button>
-        <button class="control-btn location" id="locationBtn" onclick="goToMyLocation()">📍</button>
+        <button class="control-btn location" onclick="goToMyLocation()">📍</button>
     </div>
     
     <div class="fab-container">
@@ -139,50 +87,68 @@
         <div class="sheet-content" id="sheetContent"></div>
     </div>
     
+    <!-- ОКНО ПОДДЕРЖКИ С СБП -->
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal" style="text-align: center; max-width: 420px;">
+            <div style="font-size: 64px; margin-bottom: 12px;">💳</div>
+            <div class="modal-title">Поддержать проект</div>
+            
+            <p style="color: #555; font-size: 14px; margin-bottom: 20px;">
+                Привет! Я студент и делаю эту карту бесплатно.<br>
+                Любая сумма помогает развивать проект! ❤️
+            </p>
+            
+            <!-- СБП -->
+            <div style="background: linear-gradient(135deg, #00C853, #00E676); padding: 20px; border-radius: 16px; margin-bottom: 16px; color: white;">
+                <div style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">🏦 СБП (мгновенно)</div>
+                <div style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">+7 (928) 151-87-76</div>
+                <div style="font-size: 12px; opacity: 0.9;">По номеру телефона в приложении банка</div>
+            </div>
+            
+            <p style="font-size: 12px; color: #999; margin-bottom: 16px;">
+                Благодарю за поддержку! 🙏
+            </p>
+            
+            <button class="modal-btn primary" onclick="closeSupportModal()" style="background: #007AFF; color: white;">
+                Понятно
+            </button>
+        </div>
+    </div>
+    
+    <!-- ОКНО СОБЫТИЙ -->
     <div class="modal-overlay" id="eventModal">
         <div class="modal">
             <div class="modal-title">⚠️ Добавить событие</div>
             <p style="font-size:13px; color:#666; margin-bottom:12px;">Кликните по карте</p>
-            <select id="eventType">
+            <select id="eventType" style="width:100%; padding:12px; margin-bottom:12px; border-radius:8px; border:1px solid #e0e0e0;">
                 <option value="accident">🚨 Авария</option>
-                <option value="repair">🚧 Ремонт дороги</option>
+                <option value="repair">🚧 Ремонт</option>
                 <option value="closure">🚫 Перекрытие</option>
-                <option value="danger">⚠️ Опасное место</option>
-                <option value="scam">💰 Обман на АЗС</option>
             </select>
-            <textarea id="eventDescription" placeholder="Описание..."></textarea>
+            <textarea id="eventDescription" placeholder="Описание..." style="width:100%; padding:12px; margin-bottom:12px; border-radius:8px; border:1px solid #e0e0e0;"></textarea>
             <button class="modal-btn primary" onclick="submitEvent()">Добавить</button>
             <button class="modal-btn secondary" onclick="cancelEvent()">Отмена</button>
         </div>
     </div>
     
-    <div class="modal-overlay" id="supportModal">
-        <div class="modal" style="text-align: center; max-width: 360px;">
-            <div style="font-size: 48px; margin-bottom: 12px;"></div>
-            <div class="modal-title" style="justify-content: center;">Поддержать проект</div>
-            <p style="color: #555; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
-                Я студент, делаю всё сам.<br>
-                Любая сумма помогает держать карту живой ❤️
-            </p>
-            <a href="https://yoomoney.ru/to/41001ВАШ_КОШЕЛЁК" target="_blank" class="modal-btn primary"> Перевести</a>
-            <button class="modal-btn secondary" onclick="closeSupportModal()">Закрыть</button>
-        </div>
-    </div>
-    
     <script>
-        const API_URL = 'http://localhost:8000';
-        
         let myMap = null;
-        let userPlacemark = null;
         let userPosition = null;
         let allStations = [];
         let placemarks = {};
         let eventPlacemark = null;
         let eventPosition = null;
         let isAddingEvent = false;
-        let chatInterval = null;
         let currentStationId = null;
-        let currentStationData = null;
+        const API_URL = 'http://localhost:8000';
+        
+        function openSupportModal() {
+            document.getElementById('supportModal').classList.add('active');
+        }
+        
+        function closeSupportModal() {
+            document.getElementById('supportModal').classList.remove('active');
+        }
         
         function getBrandColor(name) {
             const lower = name.toLowerCase();
@@ -191,8 +157,6 @@
             if (lower.includes('газпром') || lower.includes('gazprom')) return '#00AEEF';
             if (lower.includes('татнефть') || lower.includes('tatneft')) return '#00A651';
             if (lower.includes('башнефть') || lower.includes('bashneft')) return '#E30613';
-            if (lower.includes('шелл') || lower.includes('shell')) return '#FFD700';
-            if (lower.includes('bp')) return '#00B04F';
             return '#FFD60A';
         }
         
@@ -203,8 +167,6 @@
             if (lower.includes('газпром') || lower.includes('gazprom')) return 'Г';
             if (lower.includes('татнефть') || lower.includes('tatneft')) return 'Т';
             if (lower.includes('башнефть') || lower.includes('bashneft')) return 'Б';
-            if (lower.includes('шелл') || lower.includes('shell')) return '';
-            if (lower.includes('bp')) return 'BP';
             return '⛽';
         }
         
@@ -229,50 +191,12 @@
             
             return ymaps.templateLayoutFactory.createClass(
                 `<div style="position: relative; width: 44px; height: 54px; cursor: pointer;">
-                    <div style="
-                        width: 44px;
-                        height: 44px;
-                        border-radius: 50% 50% 50% 0;
-                        background: ${color};
-                        transform: rotate(-45deg);
-                        border: 3px solid white;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    ">
-                        <span style="
-                            transform: rotate(45deg);
-                            color: white;
-                            font-weight: bold;
-                            font-size: ${letter.length > 1 ? '11px' : '18px'};
-                            font-family: Inter, sans-serif;
-                        ">${letter}</span>
+                    <div style="width: 44px; height: 44px; border-radius: 50% 50% 50% 0; background: ${color}; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+                        <span style="transform: rotate(45deg); color: white; font-weight: bold; font-size: 18px; font-family: Inter, sans-serif;">${letter}</span>
                     </div>
-                    <div style="
-                        position: absolute;
-                        bottom: 4px;
-                        right: 0px;
-                        width: 16px;
-                        height: 16px;
-                        border-radius: 50%;
-                        background: ${statusColor};
-                        border: 2px solid white;
-                        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-                        ${pulseStyle}
-                    "></div>
+                    <div style="position: absolute; bottom: 4px; right: 0px; width: 16px; height: 16px; border-radius: 50%; background: ${statusColor}; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.4); ${pulseStyle}"></div>
                 </div>`
             );
-        }
-        
-        function initMap() {
-            myMap = new ymaps.Map('map', {
-                center: [47.2357, 39.7015],
-                zoom: 8,
-                controls: []
-            });
-            
-            loadStations();
         }
         
         async function loadStations() {
@@ -291,10 +215,7 @@
                         {},
                         {
                             iconLayout: Layout,
-                            iconShape: {
-                                type: 'Rectangle',
-                                coordinates: [[0, 0], [44, 54]]
-                            }
+                            iconShape: { type: 'Rectangle', coordinates: [[0, 0], [44, 54]] }
                         }
                     );
                     
@@ -307,96 +228,36 @@
             }
         }
         
-        function updateStationPlacemark(station) {
-            const placemark = placemarks[station.id];
-            if (placemark) {
-                myMap.geoObjects.remove(placemark);
-                
-                const Layout = createPlacemarkLayout(station);
-                const newPlacemark = new ymaps.Placemark(
-                    [station.lat, station.lng],
-                    {},
-                    {
-                        iconLayout: Layout,
-                        iconShape: {
-                            type: 'Rectangle',
-                            coordinates: [[0, 0], [44, 54]]
-                        }
-                    }
-                );
-                
-                newPlacemark.events.add('click', () => openStationSheet(station));
-                myMap.geoObjects.add(newPlacemark);
-                placemarks[station.id] = newPlacemark;
-            }
-        }
-        
-        // ✅ ИСПРАВЛЕННАЯ ГЕОЛОКАЦИЯ
-        function goToMyLocation() {
-            const btn = document.getElementById('locationBtn');
-            btn.classList.add('active');
-            
-            ymaps.geolocation.get({
-                provider: 'browser',
-                mapStateAutoApply: true
-            }).then(function (result) {
-                const coords = result.geoObjects.get(0).geometry.getCoordinates();
-                userPosition = { lat: coords[0], lng: coords[1] };
-                
-                myMap.setCenter(coords, 14, { duration: 500 });
-                
-                if (userPlacemark) {
-                    myMap.geoObjects.remove(userPlacemark);
-                }
-                
-                userPlacemark = new ymaps.Placemark(
-                    coords,
-                    { hintContent: 'Вы здесь' },
-                    {
-                        preset: 'islands#blueCircleDotIcon',
-                        zIndex: 1000
-                    }
-                );
-                
-                myMap.geoObjects.add(userPlacemark);
-                setTimeout(() => btn.classList.remove('active'), 2000);
-                console.log('📍 Позиция:', userPosition);
-            }).catch(function (error) {
-                console.error('Ошибка геолокации:', error);
-                alert('Не удалось определить местоположение. Разрешите доступ в браузере.');
-                btn.classList.remove('active');
-            });
-        }
-        
-        function zoomIn() { myMap.setZoom(myMap.getZoom() + 1, { duration: 200 }); }
-        function zoomOut() { myMap.setZoom(myMap.getZoom() - 1, { duration: 200 }); }
-        
         function openStationSheet(station) {
-            currentStationData = station;
             currentStationId = station.id;
-            
             const amenities = station.amenities || {};
             const fuels = station.fuels || {};
             
             let fuelsHtml = '';
-            if (fuels['92']) fuelsHtml += `<div class="fuel-chip"><div class="fuel-indicator ${fuels['92']}"></div>АИ-92</div>`;
-            if (fuels['95']) fuelsHtml += `<div class="fuel-chip"><div class="fuel-indicator ${fuels['95']}"></div>АИ-95</div>`;
-            if (fuels['98']) fuelsHtml += `<div class="fuel-chip"><div class="fuel-indicator ${fuels['98']}"></div>АИ-98</div>`;
-            if (fuels['dt']) fuelsHtml += `<div class="fuel-chip"><div class="fuel-indicator ${fuels['dt']}"></div>ДТ</div>`;
+            if (fuels['92']) {
+                const color92 = fuels['92'] === 'green' ? '#34C759' : fuels['92'] === 'yellow' ? '#FFD60A' : '#FF3B30';
+                fuelsHtml += `<div style="display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:#f5f5f5; border-radius:12px; font-size:14px; font-weight:600; margin:4px;"><div style="width:10px; height:10px; border-radius:50%; background:${color92};"></div>АИ-92</div>`;
+            }
+            if (fuels['95']) {
+                const color95 = fuels['95'] === 'green' ? '#34C759' : fuels['95'] === 'yellow' ? '#FFD60A' : '#FF3B30';
+                fuelsHtml += `<div style="display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:#f5f5f5; border-radius:12px; font-size:14px; font-weight:600; margin:4px;"><div style="width:10px; height:10px; border-radius:50%; background:${color95};"></div>АИ-95</div>`;
+            }
+            if (fuels['dt']) {
+                const colorDT = fuels['dt'] === 'green' ? '#34C759' : fuels['dt'] === 'yellow' ? '#FFD60A' : '#FF3B30';
+                fuelsHtml += `<div style="display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:#f5f5f5; border-radius:12px; font-size:14px; font-weight:600; margin:4px;"><div style="width:10px; height:10px; border-radius:50%; background:${colorDT};"></div>ДТ</div>`;
+            }
             
             let servicesHtml = '';
             const services = [
                 { key: 'toilet', icon: '🚽', name: 'Туалет' },
-                { key: 'shower', icon: '🚿', name: 'Душ' },
                 { key: 'cafe', icon: '☕', name: 'Кафе' },
                 { key: 'wifi', icon: '📶', name: 'Wi-Fi' },
-                { key: 'atm', icon: '🏧', name: 'Банкомат' },
                 { key: 'shop', icon: '🛒', name: 'Магазин' }
             ];
             
             services.forEach(s => {
                 if (amenities[s.key]) {
-                    servicesHtml += `<div class="service-item"><span class="service-icon">${s.icon}</span><span>${s.name}</span></div>`;
+                    servicesHtml += `<div style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:12px 8px; background:#f8f8f8; border-radius:12px; font-size:12px; color:#555;"><span style="font-size:24px;">${s.icon}</span><span>${s.name}</span></div>`;
                 }
             });
             
@@ -405,184 +266,77 @@
             }
             
             document.getElementById('sheetContent').innerHTML = `
-                <div class="sheet-header">
-                    <div class="sheet-title">${station.name}</div>
-                    <button class="sheet-close" onclick="closeSheet()">✕</button>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+                    <div style="font-size:22px; font-weight:700; color:#1a1a1a; flex:1;">${station.name}</div>
+                    <button onclick="closeSheet()" style="width:32px; height:32px; background:#f0f0f0; border-radius:50%; border:none; cursor:pointer; font-size:18px;">✕</button>
                 </div>
-                <div class="fuel-bar">${fuelsHtml}</div>
-                <div class="services-grid">${servicesHtml}</div>
-                <div class="action-buttons">
-                    <button class="action-btn primary" onclick="updateStatus()">🔄 Обновить статус</button>
-                    <button class="action-btn secondary" onclick="buildRoute()"> Маршрут</button>
-                </div>
-                <div class="chat-section">
-                    <div class="chat-header">💬 Чат АЗС</div>
-                    <div class="chat-messages" id="chatMessages">
-                        <div style="color:#999; text-align:center; padding:20px;">Загрузка...</div>
-                    </div>
-                    <div class="chat-input-container">
-                        <input type="text" class="chat-name-input" id="chatName" placeholder="Имя">
-                        <input type="text" class="chat-text-input" id="chatText" placeholder="Сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
-                        <button class="chat-send-btn" onclick="sendMessage()">➤</button>
-                    </div>
+                <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">${fuelsHtml}</div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; margin-bottom:20px;">${servicesHtml}</div>
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <button onclick="updateStatus()" style="flex:1; padding:14px; border:none; border-radius:14px; font-size:14px; font-weight:600; cursor:pointer; background:#FFD60A; color:#1a1a1a;">🔄 Обновить статус</button>
+                    <button onclick="buildRoute()" style="flex:1; padding:14px; border:none; border-radius:14px; font-size:14px; font-weight:600; cursor:pointer; background:#f0f0f0; color:#333;">🧭 Маршрут</button>
                 </div>
             `;
             
             document.getElementById('bottomSheet').classList.add('active');
-            loadChat(station.id);
-            startChatAutoUpdate(station.id);
         }
         
         function closeSheet() {
             document.getElementById('bottomSheet').classList.remove('active');
-            stopChatAutoUpdate();
             currentStationId = null;
-            currentStationData = null;
-        }
-        
-        async function loadChat(stationId) {
-            try {
-                const response = await fetch(`${API_URL}/api/stations/${stationId}/chat`);
-                const messages = await response.json();
-                
-                const chatDiv = document.getElementById('chatMessages');
-                if (!chatDiv) return;
-                
-                if (messages.length === 0) {
-                    chatDiv.innerHTML = '<div style="color:#999; text-align:center; padding:20px; font-size:13px;">Пока нет сообщений</div>';
-                    return;
-                }
-                
-                chatDiv.innerHTML = messages.map(msg => {
-                    const time = new Date(msg.created_at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                    return `
-                        <div class="chat-message">
-                            <div class="chat-meta">
-                                <span class="chat-author">${msg.author_name}</span>
-                                <span class="chat-time">${time}</span>
-                            </div>
-                            <div class="chat-text">${msg.text}</div>
-                        </div>
-                    `;
-                }).join('');
-                
-                chatDiv.scrollTop = chatDiv.scrollHeight;
-            } catch (error) {
-                console.error('Ошибка загрузки чата:', error);
-            }
-        }
-        
-        async function sendMessage() {
-            const nameInput = document.getElementById('chatName');
-            const textInput = document.getElementById('chatText');
-            
-            const authorName = nameInput.value.trim() || 'Гость';
-            const text = textInput.value.trim();
-            
-            if (!text) return;
-            
-            try {
-                const response = await fetch(
-                    `${API_URL}/api/stations/${currentStationId}/chat?author_name=${encodeURIComponent(authorName)}&text=${encodeURIComponent(text)}`,
-                    { method: 'POST' }
-                );
-                
-                if (response.ok) {
-                    textInput.value = '';
-                    loadChat(currentStationId);
-                } else {
-                    const error = await response.json();
-                    alert(error.detail || 'Ошибка');
-                }
-            } catch (error) {
-                alert('Ошибка отправки');
-            }
-        }
-        
-        function startChatAutoUpdate(stationId) {
-            stopChatAutoUpdate();
-            chatInterval = setInterval(() => loadChat(stationId), 30000);
-        }
-        
-        function stopChatAutoUpdate() {
-            if (chatInterval) { clearInterval(chatInterval); chatInterval = null; }
         }
         
         async function updateStatus() {
-            if (!currentStationData) return;
-            
-            const fuelType = prompt('Какое топливо?\n92, 95, 98 или dt');
+            if (!currentStationId) return;
+            const fuelType = prompt('Какое топливо? (92, 95 или dt)');
             if (!fuelType) return;
-            
-            const status = prompt('Статус наличия:\ngreen — есть\nyellow — заканчивается\nred — нет');
+            const status = prompt('Статус? (green, yellow или red)');
             if (!status || !['green', 'yellow', 'red'].includes(status)) {
-                alert('Неверный статус! Используй: green, yellow или red');
+                alert('Неверный статус!');
                 return;
             }
             
             try {
-                const response = await fetch(
-                    `${API_URL}/api/stations/${currentStationId}/update_status?fuel_type=${fuelType}&status=${status}`,
-                    { method: 'POST' }
-                );
-                
+                const response = await fetch(`${API_URL}/api/stations/${currentStationId}/update_status?fuel_type=${fuelType}&status=${status}`, { method: 'POST' });
                 if (response.ok) {
-                    const data = await response.json();
-                    
-                    currentStationData.fuels = data.fuels;
-                    const idx = allStations.findIndex(s => s.id === currentStationId);
-                    if (idx !== -1) allStations[idx].fuels = data.fuels;
-                    
-                    updateStationPlacemark(currentStationData);
-                    openStationSheet(currentStationData);
-                    showToast(`✅ Статус ${fuelType.toUpperCase()} обновлён!`);
+                    alert('✅ Статус обновлён!');
+                    location.reload();
                 } else {
-                    const error = await response.json();
-                    alert('Ошибка: ' + (error.detail || 'Неизвестная ошибка'));
+                    alert('Ошибка');
                 }
             } catch (error) {
-                alert('Ошибка соединения: ' + error);
+                alert('Ошибка: ' + error);
             }
         }
         
         function buildRoute() {
-            if (!currentStationData) return;
-            const fromCoords = userPosition ? `${userPosition.lat},${userPosition.lng}` : '55.751244,37.618423';
-            const url = `https://yandex.ru/maps/?rtext=${fromCoords}~${currentStationData.lat},${currentStationData.lng}&rtt=auto`;
+            if (!currentStationId) return;
+            const station = allStations.find(s => s.id === currentStationId);
+            if (!station) return;
+            const url = `https://yandex.ru/maps/?rtext=~${station.lat},${station.lng}&rtt=auto`;
             window.open(url, '_blank');
         }
         
-        function searchStations() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const resultsDiv = document.getElementById('searchResults');
-            
-            if (!query) { resultsDiv.classList.remove('active'); return; }
-            
-            const results = allStations.filter(s => s.name.toLowerCase().includes(query));
-            
-            if (results.length === 0) {
-                resultsDiv.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">Ничего не найдено</div>';
-            } else {
-                resultsDiv.innerHTML = results.slice(0, 10).map(s => `
-                    <div class="search-result-item" onclick="goToStation(${s.id})">
-                        <div class="search-result-name">${s.name}</div>
-                        <div class="search-result-address">${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</div>
-                    </div>
-                `).join('');
-            }
-            
-            resultsDiv.classList.add('active');
+        function initMap() {
+            myMap = new ymaps.Map('map', {
+                center: [47.2357, 39.7015],
+                zoom: 8,
+                controls: []
+            });
+            loadStations();
         }
         
-        function goToStation(stationId) {
-            const station = allStations.find(s => s.id === stationId);
-            if (!station) return;
-            
-            myMap.setCenter([station.lat, station.lng], 16, { duration: 500 });
-            document.getElementById('searchResults').classList.remove('active');
-            document.getElementById('searchInput').value = '';
-            
-            setTimeout(() => openStationSheet(station), 500);
+        function goToMyLocation() {
+            ymaps.geolocation.get({
+                provider: 'browser',
+                mapStateAutoApply: true
+            }).then(function (result) {
+                const coords = result.geoObjects.get(0).geometry.getCoordinates();
+                userPosition = { lat: coords[0], lng: coords[1] };
+                myMap.setCenter(coords, 14, { duration: 500 });
+            }).catch(function (error) {
+                alert('Не удалось определить местоположение.');
+            });
         }
         
         function startAddingEvent() {
@@ -594,15 +348,9 @@
         function onMapClickForEvent(e) {
             if (!isAddingEvent) return;
             const coords = e.get('coords');
-            eventPosition = { lat: coords[0], lng: coords[1] };
-            
-            if (eventPlacemark) {
-                myMap.geoObjects.remove(eventPlacemark);
-            }
-            
-            eventPlacemark = new ymaps.Placemark(coords, {}, {
-                preset: 'islands#redIcon'
-            });
+            eventPosition = coords;
+            if (eventPlacemark) myMap.geoObjects.remove(eventPlacemark);
+            eventPlacemark = new ymaps.Placemark(coords, {}, { preset: 'islands#redIcon' });
             myMap.geoObjects.add(eventPlacemark);
         }
         
@@ -619,70 +367,30 @@
         async function submitEvent() {
             const type = document.getElementById('eventType').value;
             const description = document.getElementById('eventDescription').value.trim();
-            
             if (!eventPosition) { alert('Кликните по карте'); return; }
             if (!description) { alert('Введите описание'); return; }
             
             try {
                 const response = await fetch(
-                    `${API_URL}/api/events?lat=${eventPosition.lat}&lng=${eventPosition.lng}&type=${type}&description=${encodeURIComponent(description)}`,
+                    `${API_URL}/api/events?lat=${eventPosition[0]}&lng=${eventPosition[1]}&type=${type}&description=${encodeURIComponent(description)}`,
                     { method: 'POST' }
                 );
-                
                 if (response.ok) {
-                    showToast('✅ Событие добавлено!');
+                    alert('✅ Событие добавлено!');
                     cancelEvent();
-                } else {
-                    alert('Ошибка');
                 }
             } catch (error) {
-                alert('Ошибка');
+                alert('Ошибка: ' + error);
             }
         }
         
         function toggleFilters() {
-            alert('Фильтры скоро будут доступны!');
+            alert('Фильтры скоро будут!');
         }
         
-        function openSupportModal() {
-            document.getElementById('supportModal').classList.add('active');
-        }
-        
-        function closeSupportModal() {
-            document.getElementById('supportModal').classList.remove('active');
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.85); color: white; padding: 12px 24px;
-                border-radius: 12px; font-size: 14px; font-weight: 500; z-index: 3000;
-                animation: toastIn 0.3s ease;
-            `;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'toastOut 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 2000);
-        }
-        
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    overlay.classList.remove('active');
-                    if (overlay.id === 'eventModal') cancelEvent();
-                }
-            });
-        });
-        
-        document.addEventListener('click', (e) => {
-            const results = document.getElementById('searchResults');
-            const searchInput = document.getElementById('searchInput');
-            if (!results.contains(e.target) && e.target !== searchInput) {
-                results.classList.remove('active');
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
             }
         });
         
